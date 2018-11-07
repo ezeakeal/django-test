@@ -128,6 +128,6 @@ REST_FRAMEWORK = {
 #################
 # Celery Config
 #################
-CELERY_BROKER_URL = 'redis://localhost'
+CELERY_BROKER_URL = 'redis://redis:6379'
 
 
