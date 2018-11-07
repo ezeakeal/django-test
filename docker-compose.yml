@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  redis:
+    image: 'redis:3.0-alpine'
+    command: redis-server
+    volumes:
+      - 'redis:/data'
+    ports:
+      - '6379:6379'
+
+  website:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      PYTHONUNBUFFERED: 'true'
+    volumes:
+      - './tutorial:/code'
+    ports:
+      - '8000:8000'
+
+  celery:
+    build: .
+    command: celery -A tutorial.celery worker -l DEBUG -E
+    volumes:
+      - './tutorial:/code'
+
+volumes:
+  redis:
